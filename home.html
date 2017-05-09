@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Classification</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="home_styles.css">
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <div id="header">
+
+            <div id="logo">
+
+                <img src="images/collexion_logo.png">
+
+            </div>
+
+        </div>
+
+        <div id="main">
+
+            <div id="app_name">
+
+                <h1>CollexionVision&trade;</h1>
+
+            </div>
+
+            <div id="instructions">
+
+                Please paste an image URL and click "Analyze" to begin item identification.
+
+            </div>
+
+            <div id="input_section">
+
+                <input type="text" id="image_url" placeholder="Image URL">
+
+                <button id="submit" >Analyze</button>
+
+            </div>
+
+            <div id="image_box" class="hide-me">
+
+                <div id="nat_image_size">
+
+                </div>
+
+            </div>
+
+            <div id="classifications" class="hide-me">
+
+                    <ul id="classification_list">
+
+                    </ul>
+            </div>
+
+            <div id="reset_section" class="hide-me">
+
+                <button id="reset_button"><u>Identify Another Image</u></button>
+
+            </div>
+
+        </div>
+
+        <div id="footer">
+            <p>2013 - 2017 Collexion Inc | Terms and Privacy</p>
+        </div>
+
+    </div>
+
+</body>
+
+<script src="home_script.js"></script>
+</html>

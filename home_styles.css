@@ -1,0 +1,130 @@
+html{
+    font-family: museo-sans, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+h1{
+    font-weight: 500;
+    font-size: 2.2em;
+}
+
+img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#nat_image_size{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.hide-me{
+    display: none;
+}
+
+.show-me{
+    display: block;
+}
+
+#wrapper{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-width: 100vh;
+    justify-content: space-between;
+    background-color: #333;
+}
+
+#header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-height: 7vh;
+}
+
+#logo{
+    display: flex;
+    justify-content: space-around;
+    height: 50%;
+    width: 50%;
+    margin-right: 7%;
+}
+
+#main{
+    display: flex;
+    flex-direction: column;
+    min-height: 30vh;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#app_name{
+    min-height: 5vh;
+    color: white;
+}
+
+#instructions{
+    max-height: 3vh;
+    color: white;
+    font-size: .9em;
+}
+
+#input_section{
+    min-height: 5vh;
+    min-width: 5vh;
+    display: flex;
+    flex-direction: row;
+
+
+}
+
+textarea{
+    width: 500px;
+    border-radius: 10%;
+}
+
+#submit{
+    background-color: #ef7733;
+    border-radius: 10%;
+    color: white;
+}
+
+
+#classifications{
+    position: relative;
+}
+
+#reset_section{
+    position: relative;
+}
+
+#classification_list{
+    list-style-type: none;
+    padding: 0;
+    color: white;
+    font-size: 1.5em;
+}
+
+#footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: .6em;
+    min-height: 4vh;
+}
+
+#reset_button{
+    color: white;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+#image_box{
+    width: auto;
+}
+
