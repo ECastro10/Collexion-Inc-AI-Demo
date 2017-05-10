@@ -3,7 +3,7 @@
  */
 var landingScreen = true;
 var image_url;
-var api_key = "Your_api_key";
+var api_key = "Your API key";
 var watson_version = "2016-05-20";
 var threshold = "0";
 
@@ -22,7 +22,7 @@ $(function () {
                 type: 'GET',
                 // To change back to IBM classifiers, owners=IBM%2Cme
                 url: 'https://watson-api-explorer.mybluemix.net/visual-recognition/api/v3/classify?api_key=' + api_key +
-                '&url=' + image_url + '&owners=me&classifier_ids=["typewriter_1529743348", "baseball_card_1128834267", "Vinyl_Album_Cover_173653892"]&threshold=' + threshold + '&version=' +
+                '&url=' + image_url + '&owners=me&classifier_ids=["Typewriter_1686415410", "baseball_card_1648401150", "VinylAlbumCover_1686257881"]&threshold=' + threshold + '&version=' +
                 watson_version,
 
                 success: function (data) {
@@ -48,10 +48,10 @@ $(function () {
                     // console.log(classifiers_list);
 
                     for (var fier = 0; fier < classifiers_list.length; fier++){
-                        console.log(classifiers_list[fier]);
+                        // console.log(classifiers_list[fier]);
 
                         for (var sub = 0; sub < classifiers_list[fier].classes.length; sub++){
-                            console.log(classifiers_list[fier].classes[sub].class + " " + classifiers_list[fier].classes[sub].score);
+                            // console.log(classifiers_list[fier].classes[sub].class + " " + classifiers_list[fier].classes[sub].score);
 
                             // console.log(classifiers_list[fier].classes[sub]);
 
@@ -72,7 +72,7 @@ $(function () {
                         $.ajax({
                             type: 'GET',
                             url: 'https://watson-api-explorer.mybluemix.net/visual-recognition/api/v3/classify?api_key=' + api_key +
-                                '&url=' + image_url + '&owners=me&classifier_ids=["specificplayer_1843323935"]&threshold=' + threshold + '&version=' +
+                                '&url=' + image_url + '&owners=me&classifier_ids=["SpecificPlayer_1891366419"]&threshold=' + threshold + '&version=' +
                                 watson_version,
                             success: function(data) {
                                 // console.log(data);
@@ -81,7 +81,7 @@ $(function () {
 
                                 for (var player = 0; player < classes_list.length; player++){
 
-                                    console.log(classes_list[player].class + " " + classes_list[player].score);
+                                    // console.log(classes_list[player].class + " " + classes_list[player].score);
 
                                     if (player == 0){
                                         best_player_match = classes_list[player];
@@ -91,13 +91,23 @@ $(function () {
                                         // console.log(best_player_match);
                                     }
                                 }
-
-                                if (current_highest_class.class == "sixtyeight"){
-                                    $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + " " +
-                                    "1968" + " " + best_player_match.class + '</li>');
+                                 if (current_highest_class.class == "sixtyeight"){
+                                    if (best_player_match.score < .70){
+                                        $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + " " +
+                                        "1968" + '</li>');
+                                    }
+                                    else {
+                                        $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + " " +
+                                            "1968" + " " + best_player_match.class + '</li>');
+                                    }
                                 } else if (current_highest_class.class == "sixtynine") {
-                                    $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + " " +
-                                    "1969" + " " + best_player_match.class +  '</li>');
+                                     if (best_player_match.score < .70) {
+                                         $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + " " +
+                                             "1969" + '</li>');
+                                     } else{
+                                         $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + " " +
+                                             "1969" + " " + best_player_match.class +  '</li>');
+                                     }
                                 }
                             }
                         });
