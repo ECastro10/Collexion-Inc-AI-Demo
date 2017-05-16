@@ -51,7 +51,7 @@ $(function () {
                         // console.log(classifiers_list[fier]);
 
                         for (var sub = 0; sub < classifiers_list[fier].classes.length; sub++){
-                            console.log(classifiers_list[fier].classes[sub].class + " " + classifiers_list[fier].classes[sub].score);
+                            // console.log(classifiers_list[fier].classes[sub].class + " " + classifiers_list[fier].classes[sub].score);
 
                             // console.log(classifiers_list[fier].classes[sub]);
 
@@ -80,7 +80,7 @@ $(function () {
                             success: function(data) {
                                 // console.log(data);
 
-                                classes_list = data.images[0].classifiers[0].classes;
+                                var classes_list = data.images[0].classifiers[0].classes;
 
                                 for (var player = 0; player < classes_list.length; player++){
 
@@ -96,20 +96,18 @@ $(function () {
                                 }
                                  if (current_highest_class.class == "sixtyeight"){
                                     if (best_player_match.score < .70){
-                                        $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + ", " +
-                                        "1968" + '</li>');
+                                        $('#classification_list').append('<li id="changing_li">' +  "Baseball Card, 1968" + '</li>');
                                     }
                                     else {
-                                        $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + ", " +
-                                            "1968" + ", " + best_player_match.class + '</li>');
+                                        $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1968, " +
+                                            best_player_match.class + '</li>');
                                     }
                                 } else if (current_highest_class.class == "sixtynine") {
                                      if (best_player_match.score < .70) {
-                                         $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + ", " +
-                                             "1969" + '</li>');
+                                         $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1969" + '</li>');
                                      } else{
-                                         $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + ", " +
-                                             "1969" + ", " + best_player_match.class +  '</li>');
+                                         $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1969, " +
+                                             best_player_match.class +  '</li>');
                                      }
                                 }
                             }
