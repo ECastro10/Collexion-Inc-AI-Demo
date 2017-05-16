@@ -3,7 +3,7 @@
  */
 var landingScreen = true;
 var image_url;
-var api_key = "Your API key";
+var api_key = "Your API Key";
 var watson_version = "2016-05-20";
 var threshold = "0";
 
@@ -51,7 +51,7 @@ $(function () {
                         // console.log(classifiers_list[fier]);
 
                         for (var sub = 0; sub < classifiers_list[fier].classes.length; sub++){
-                            // console.log(classifiers_list[fier].classes[sub].class + " " + classifiers_list[fier].classes[sub].score);
+                            console.log(classifiers_list[fier].classes[sub].class + " " + classifiers_list[fier].classes[sub].score);
 
                             // console.log(classifiers_list[fier].classes[sub]);
 
@@ -68,7 +68,10 @@ $(function () {
 
                         }
                     }
-                    if (current_highest_class.class == "sixtyeight" || current_highest_class.class == "sixtynine"){
+                    if (current_highest_class.score < .60) {
+                        $('#classification_list').append('<li id="changing_li">' + "Could Not Classify" + '</li>');
+
+                    } else if (current_highest_class.class == "sixtyeight" || current_highest_class.class == "sixtynine"){
                         $.ajax({
                             type: 'GET',
                             url: 'https://watson-api-explorer.mybluemix.net/visual-recognition/api/v3/classify?api_key=' + api_key +
@@ -93,29 +96,29 @@ $(function () {
                                 }
                                  if (current_highest_class.class == "sixtyeight"){
                                     if (best_player_match.score < .70){
-                                        $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + " " +
+                                        $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + ", " +
                                         "1968" + '</li>');
                                     }
                                     else {
-                                        $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + " " +
-                                            "1968" + " " + best_player_match.class + '</li>');
+                                        $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + ", " +
+                                            "1968" + ", " + best_player_match.class + '</li>');
                                     }
                                 } else if (current_highest_class.class == "sixtynine") {
                                      if (best_player_match.score < .70) {
-                                         $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + " " +
+                                         $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + ", " +
                                              "1969" + '</li>');
                                      } else{
-                                         $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + " " +
-                                             "1969" + " " + best_player_match.class +  '</li>');
+                                         $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + ", " +
+                                             "1969" + ", " + best_player_match.class +  '</li>');
                                      }
                                 }
                             }
                         });
                     } else {
-                        $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + " " +
+                        $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + ", " +
                         current_highest_class.class + '</li>');
                     }
-
+                    $('#image_url').val("");
                      landingScreen = false;
 
 
