@@ -3,12 +3,15 @@
  */
 var landingScreen = true;
 var image_url;
-var api_key = "Your API Key";
+var api_key = Your API Key;
 var watson_version = "2016-05-20";
-var threshold = "0";
+var threshold = ".6";
 
 var classifiers_list;
 var best_player_match;
+var ignoreThese = ["printer", "machine", "device", "typewriter", "green color", "portable typewriter", "magazine",
+                   "newspaper", "tabloid", "medium", "person", "musician", "singer", "entertainer", "baseball player",
+                   "athlete", "contestant"];
 
 $(function () {
 
@@ -22,7 +25,8 @@ $(function () {
                 type: 'GET',
                 // To change back to IBM classifiers, owners=IBM%2Cme
                 url: 'https://watson-api-explorer.mybluemix.net/visual-recognition/api/v3/classify?api_key=' + api_key +
-                '&url=' + image_url + '&owners=me&classifier_ids=["Typewriter_1686415410", "baseball_card_1648401150", "VinylAlbumCover_1686257881"]&threshold=' + threshold + '&version=' +
+                '&url=' + image_url + '&owners=me&classifier_ids=["Typewriter_1686415410", "baseball_card_1648401150",' +
+                '"VinylAlbumCover_1686257881", "default"]&threshold=' + threshold + '&version=' +
                 watson_version,
 
                 success: function (data) {
@@ -51,19 +55,30 @@ $(function () {
                         // console.log(classifiers_list[fier]);
 
                         for (var sub = 0; sub < classifiers_list[fier].classes.length; sub++){
-                            // console.log(classifiers_list[fier].classes[sub].class + " " + classifiers_list[fier].classes[sub].score);
 
-                            // console.log(classifiers_list[fier].classes[sub]);
+                            // console.log(String(classifiers_list[fier].classes[sub].class));
+                            var tester = ignoreThese.indexOf(classifiers_list[fier].classes[sub].class);
+                            // console.log(tester);
 
-                            if (fier == 0 && sub == 0) {
-                                big_picture_classifier = classifiers_list[fier].name;
-                                // console.log(current_highest_class = classifiers_list[fier].classes[sub]);
-                                current_highest_class = classifiers_list[fier].classes[sub];
+                            if (tester > -1 || classifiers_list[fier].classes[sub].class.slice(-5) == "color") {
 
-                            } else if (current_highest_class.score < classifiers_list[fier].classes[sub].score){
-                                big_picture_classifier = classifiers_list[fier].name;
-                                current_highest_class = classifiers_list[fier].classes[sub];
+                            } else {
 
+                                console.log(classifiers_list[fier].classes[sub].class + " " + classifiers_list[fier].classes[sub].score);
+
+                                // console.log(classifiers_list[fier].classes[sub]);
+
+
+                                if (fier == 0 && sub == 0) {
+                                    big_picture_classifier = classifiers_list[fier].name;
+                                    // console.log(current_highest_class = classifiers_list[fier].classes[sub]);
+                                    current_highest_class = classifiers_list[fier].classes[sub];
+
+                                } else if (current_highest_class.score < classifiers_list[fier].classes[sub].score) {
+                                    big_picture_classifier = classifiers_list[fier].name;
+                                    current_highest_class = classifiers_list[fier].classes[sub];
+
+                                }
                             }
 
                         }
@@ -80,41 +95,69 @@ $(function () {
                             success: function(data) {
                                 // console.log(data);
 
-                                var classes_list = data.images[0].classifiers[0].classes;
 
-                                for (var player = 0; player < classes_list.length; player++){
+                                if ("undefined" === typeof data.images[0].classifiers[0]){
 
-                                    // console.log(classes_list[player].class + " " + classes_list[player].score);
-
-                                    if (player == 0){
-                                        best_player_match = classes_list[player];
-                                        // console.log(best_player_match);
-                                    } else if (best_player_match.score < classes_list[player].score){
-                                        best_player_match = classes_list[player];
-                                        // console.log(best_player_match);
-                                    }
                                 }
-                                 if (current_highest_class.class == "sixtyeight"){
-                                    if (best_player_match.score < .70){
-                                        $('#classification_list').append('<li id="changing_li">' +  "Baseball Card, 1968" + '</li>');
+                                    if (current_highest_class.class == "sixtyeight") {
+                                        $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1968" + '</li>');
+
+                                    } else if (current_highest_class.class == "sixtynine") {
+                                            $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1969" + '</li>');
+
+                                } else {
+                                    var classes_list = data.images[0].classifiers[0].classes;
+
+                                    for (var player = 0; player < classes_list.length; player++) {
+
+                                        // console.log(classes_list[player].class + " " + classes_list[player].score);
+
+                                        if (player == 0) {
+                                            best_player_match = classes_list[player];
+
+                                            console.log(best_player_match);
+                                        } else if (best_player_match.score < classes_list[player].score) {
+                                            best_player_match = classes_list[player];
+
+                                            console.log(best_player_match);
+                                        }
                                     }
-                                    else {
-                                        $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1968, " +
-                                            best_player_match.class + '</li>');
+                                    if (current_highest_class.class == "sixtyeight") {
+                                        if (best_player_match.score < .60) {
+                                            $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1968" + '</li>');
+                                        }
+                                        else {
+                                            if (best_player_match.class == "MickeyMantle") {
+                                                $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1968, Mickey Mantle" +
+                                                    '</li>');
+                                            } else {
+                                                $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1968, Hank Aaron" + '</li>');
+                                            }
+                                        }
+                                    } else if (current_highest_class.class == "sixtynine") {
+                                        if (best_player_match.score < .60) {
+                                            $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1969" + '</li>');
+                                        } else {
+                                            if (best_player_match.class == "MickeyMantle") {
+                                                $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1969, Mickey Mantle" +
+                                                    '</li>');
+                                            } else {
+                                                $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1969, Hank Aaron" + '</li>');
+                                            }
+
+                                        }
                                     }
-                                } else if (current_highest_class.class == "sixtynine") {
-                                     if (best_player_match.score < .70) {
-                                         $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1969" + '</li>');
-                                     } else{
-                                         $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1969, " +
-                                             best_player_match.class +  '</li>');
-                                     }
                                 }
                             }
                         });
                     } else {
-                        $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + ", " +
-                        current_highest_class.class + '</li>');
+                        if (current_highest_class.class == "ElvisPresley"){
+                            $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + "," +
+                                "Elvis Presley" + '</li>');
+                        } else{
+                            $('#classification_list').append('<li id="changing_li">' + big_picture_classifier + ", " +
+                            current_highest_class.class + '</li>');
+                        }
                     }
                     $('#image_url').val("");
                      landingScreen = false;
@@ -141,3 +184,4 @@ $('#reset_button').on('click', function() {
        landingScreen = true;
    }
 });
+
