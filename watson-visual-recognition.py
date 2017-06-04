@@ -3,7 +3,7 @@ from os.path import join, dirname
 from watson_developer_cloud import VisualRecognitionV3
 
 visual_recognition = VisualRecognitionV3('2016-05-20',
-    api_key='your key')
+    api_key='Your API Key')
 
 """
 To create a custom classifier, uncomment out lines 22-27, and make the appropriate revisions to benefit what you need.
@@ -31,7 +31,7 @@ To delete a classifier uncomment out line 39, and make appropriate changes.
 
 
 # Print out specific information about one classifier
-print(json.dumps(visual_recognition.get_classifier('SpecificPlayer_1891366419'), indent=2))
+# print(json.dumps(visual_recognition.get_classifier('SpecificPlayer_1891366419'), indent=2))
 
 
 # The following codes is used to delete classifiers but you first have to print the list of custom classifiers

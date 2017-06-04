@@ -3,7 +3,7 @@
  */
 var landingScreen = true;
 var image_url;
-var api_key = Your API Key;
+var api_key = "Your API Key";
 var watson_version = "2016-05-20";
 var threshold = ".6";
 
