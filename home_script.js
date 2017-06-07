@@ -3,7 +3,7 @@
  */
 var landingScreen = true;
 var image_url;
-var api_key = "Your API Key";
+var api_key = "your api key";
 var watson_version = "2016-05-20";
 var threshold = ".6";
 
@@ -64,7 +64,7 @@ $(function () {
 
                             } else {
 
-                                console.log(classifiers_list[fier].classes[sub].class + " " + classifiers_list[fier].classes[sub].score);
+                                // console.log(classifiers_list[fier].classes[sub].class + " " + classifiers_list[fier].classes[sub].score);
 
                                 // console.log(classifiers_list[fier].classes[sub]);
 
@@ -98,13 +98,13 @@ $(function () {
 
                                 if ("undefined" === typeof data.images[0].classifiers[0]){
 
-                                }
+
                                     if (current_highest_class.class == "sixtyeight") {
                                         $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1968" + '</li>');
 
                                     } else if (current_highest_class.class == "sixtynine") {
-                                            $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1969" + '</li>');
-
+                                        $('#classification_list').append('<li id="changing_li">' + "Baseball Card, 1969" + '</li>');
+                                    }
                                 } else {
                                     var classes_list = data.images[0].classifiers[0].classes;
 
@@ -115,11 +115,11 @@ $(function () {
                                         if (player == 0) {
                                             best_player_match = classes_list[player];
 
-                                            console.log(best_player_match);
+                                            // console.log(best_player_match);
                                         } else if (best_player_match.score < classes_list[player].score) {
                                             best_player_match = classes_list[player];
 
-                                            console.log(best_player_match);
+                                            // console.log(best_player_match);
                                         }
                                     }
                                     if (current_highest_class.class == "sixtyeight") {
